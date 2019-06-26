@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:task_mate/helper.dart';
+
+int numPage = 0;
 
 class Categ {
   String idCateg;
@@ -200,6 +202,8 @@ class _TasksPageState extends State<TasksPage> {
           _toDoList.removeWhere((c) => c["idCateg"] != widget.idCateg);
 
           buttonChanged = false;
+
+          _refresh();
         }
       });
     });
@@ -303,33 +307,78 @@ class _TasksPageState extends State<TasksPage> {
   }
 }
 
+final List<Widget> _pages = <Widget>[
+  Image.asset('assets/images/logo-de-supermercado-em-png-2.png',
+      fit: BoxFit.contain),
+  Image.asset('assets/images/maxresdefault.jpg', fit: BoxFit.contain),
+  Image.asset('assets/images/Screenshot_2019-06-26-09-12-50.png',
+      fit: BoxFit.contain),
+];
+
 Widget buildBottomNavigationBar(String idCateg) {
+  
   if (idCateg != '0') {
     return null;
   } else {
+    final _pageController = PageController();
+    final pageLength = 3;
+    
+    
+
     return BottomAppBar(
-        child: Stack(
-      children: <Widget>[
-        Container(
-          color: Colors.red,
-          height: 110,
-          width: double.infinity,
-          child: Image.asset(
-            'assets/images/logo-de-supermercado-em-png-2.png',
-            fit: BoxFit.contain,
+      child: Stack(
+        children: <Widget>[
+          Container(
+            color: Colors.red,
+            height: 180,
+            width: double.infinity,
+            child: PageView.builder(
+              controller: _pageController,
+              itemBuilder: (context, position) {
+                
+                return _pages[(numPage = (position % pageLength))];
+                // children: <Widget>[
+                //   Image.asset(
+                //     'assets/images/logo-de-supermercado-em-png-2.png',
+                //     fit: BoxFit.contain,
+                //   );
+                //   Image.asset('assets/images/maxresdefault.jpg',
+                //       fit: BoxFit.contain);
+                //   Image.asset('assets/images/Screenshot_2019-06-26-09-12-50.png',
+                //       fit: BoxFit.contain);
+                // },
+                // ],
+              },
+            ),
           ),
-        ),
-        Positioned(
-          right: 7,
-          bottom: 25,
-          child: IconButton(
-            iconSize: 50,
-            color: Colors.white,
-            icon: Icon(Icons.arrow_right),
-            onPressed: () {},
-          ),
-        )
-      ],
-    ));
+          // Positioned(right: 5,
+          //   child: DotsIndicator(
+          //     dotsCount: pageLength,
+          //     position: numPage, //0,
+          //     decorator: DotsDecorator(
+          //       color: Colors.black87,
+          //       activeColor: Colors.white,
+          //     ),
+          //   ),
+          // )
+        ],
+      ),
+    );
+
+    // Positioned(
+    //   right: 7,
+    //   bottom: 25,
+    //   child: IconButton(
+    //     iconSize: 50,
+    //     color: Colors.white,
+    //     icon: Icon(Icons.arrow_right),
+    //     onPressed: () {},
+    //   ),
+    // )
+
+    //  );
+    // );
+    // ],
+    // );
   }
 }

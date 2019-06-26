@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   #sqflite: any
   path_provider: ^1.1.0
+  dots_indicator: ^0.0.5
   flutter_launcher_icons: ^0.7.2
 
 dev_dependencies:
