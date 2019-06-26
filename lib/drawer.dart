@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 
-
 class CustomDrawer extends StatelessWidget {
-
   final PageController pageController;
 
   CustomDrawer(this.pageController);
 
   @override
   Widget build(BuildContext context) {
-    
     Widget _buildDrawerBack() => Container(
           decoration: BoxDecoration(
             // borderRadius: BorderRadius.circular(10),
@@ -71,7 +68,6 @@ class CustomDrawer extends StatelessWidget {
               // Divider(),
               // DrawerTile(Icons.help, "Ajuda", pageController, 1),
               // DrawerTile(Icons.perm_media, "Sobre", pageController, 2),
-
             ],
           )
         ],

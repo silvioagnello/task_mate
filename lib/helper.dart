@@ -14,7 +14,6 @@ class Helper {
   Future<File> getFile() async {
     final directory = await getApplicationDocumentsDirectory();
     return File("${directory.path}/tasks.json");
-    // return file.existsSync() ? file : null;
   }
 
   Future<String> readData() async {
