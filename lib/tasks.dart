@@ -284,7 +284,6 @@ class _TasksPageState extends State<TasksPage> {
         else
           return 0;
       });
-
       // _saveData();
     });
     return null;
