@@ -203,7 +203,7 @@ class _TasksPageState extends State<TasksPage> {
 
           buttonChanged = false;
 
-          _refresh();
+          _refresh2();
         }
       });
     });
@@ -277,6 +277,13 @@ class _TasksPageState extends State<TasksPage> {
     }
   }
 
+  changeDot(int num) {
+    setState(() {
+      numPage = num;
+      return numPage;
+    });
+  }
+
   Future<Null> _refresh() async {
     await Future.delayed(Duration(seconds: 1));
     setState(() {
@@ -293,6 +300,22 @@ class _TasksPageState extends State<TasksPage> {
     return null;
   }
 
+  Future<Null> _refresh2() async {
+    await Future.delayed(Duration(seconds: 1));
+    // setState(() {
+    _toDoList.sort((a, b) {
+      if (a["ok"] && !b["ok"])
+        return 1;
+      else if (!a["ok"] && b["ok"])
+        return -1;
+      else
+        return 0;
+    });
+    // _saveData();
+    // });
+    return null;
+  }
+
   Future<File> _saveData() async {
     var newMyList = _toDoList + _toDoList2;
     // _toDoList2 = [];
@@ -305,80 +328,104 @@ class _TasksPageState extends State<TasksPage> {
     String textToSendBack = _toDoList.length.toString();
     Navigator.pop(context, textToSendBack);
   }
+// }
+
+// final List<Widget> _pages = <Widget>[
+//   Image.asset('assets/images/logo-de-supermercado-em-png-2.png',
+//       fit: BoxFit.contain),
+//   Image.asset('assets/images/maxresdefault.jpg', fit: BoxFit.contain),
+//   Image.asset('assets/images/Screenshot_2019-06-26-09-12-50.png',
+//       fit: BoxFit.contain),
+// ];
+
+  Widget buildBottomNavigationBar(String idCateg) {
+    if (idCateg != '0') {
+      return null;
+    } else {
+      // final _pageController = PageController();
+      final pageLength = 3;
+
+      return BottomAppBar(
+        child: Stack(
+          children: <Widget>[
+            Container(
+              color: Colors.red,
+              height: 180,
+              width: double.infinity,
+              child: //PageView.builder(
+                  // controller: _pageController,
+                  // itemBuilder: (context, position) {
+
+                  // return _pages[(numPage = (position % pageLength))];
+                  PageView(
+                onPageChanged: (num) {
+                  changeDot(num);
+                  numPage = num;
+                  // if (num == pageLength) {
+                  //   numPage = -1;
+                  // }
+                  // print(numPage);
+                },
+                children: <Widget>[
+                  Image.asset(
+                    'assets/images/logo-de-supermercado-em-png-2.png',
+                    fit: BoxFit.contain,
+                  ),
+                  Image.asset('assets/images/maxresdefault.jpg',
+                      fit: BoxFit.contain),
+                  Image.asset(
+                      'assets/images/Screenshot_2019-06-26-09-12-50.png',
+                      fit: BoxFit.contain)
+                  // },
+                ],
+                // },
+              ),
+            ),
+
+            // Positioned(
+            //     right: -30.0,
+            //     child: FlatButton.icon(
+            //         icon: buildIconMarket(numPage, pageLength),
+            //         onPressed: () {
+            //           // print(numPage);
+            //         },
+            //         label: Text("")))
+            Positioned(
+              right: 5,
+              child: DotsIndicator(
+                dotsCount: pageLength,
+                position: numPage, //0,
+                decorator: DotsDecorator(
+                  color: Colors.black87,
+                  activeColor: Colors.white,
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+
+      // Positioned(
+      //   right: 7,
+      //   bottom: 25,
+      //   child: IconButton(
+      //     iconSize: 50,
+      //     color: Colors.white,
+      //     icon: Icon(Icons.arrow_right),
+      //     onPressed: () {},
+      //   ),
+      // )
+
+      //  );
+      // );
+      // ],
+      // );
+    }
+  }
 }
 
-final List<Widget> _pages = <Widget>[
-  Image.asset('assets/images/logo-de-supermercado-em-png-2.png',
-      fit: BoxFit.contain),
-  Image.asset('assets/images/maxresdefault.jpg', fit: BoxFit.contain),
-  Image.asset('assets/images/Screenshot_2019-06-26-09-12-50.png',
-      fit: BoxFit.contain),
-];
-
-Widget buildBottomNavigationBar(String idCateg) {
-  
-  if (idCateg != '0') {
-    return null;
-  } else {
-    final _pageController = PageController();
-    final pageLength = 3;
-    
-    
-
-    return BottomAppBar(
-      child: Stack(
-        children: <Widget>[
-          Container(
-            color: Colors.red,
-            height: 180,
-            width: double.infinity,
-            child: PageView.builder(
-              controller: _pageController,
-              itemBuilder: (context, position) {
-                
-                return _pages[(numPage = (position % pageLength))];
-                // children: <Widget>[
-                //   Image.asset(
-                //     'assets/images/logo-de-supermercado-em-png-2.png',
-                //     fit: BoxFit.contain,
-                //   );
-                //   Image.asset('assets/images/maxresdefault.jpg',
-                //       fit: BoxFit.contain);
-                //   Image.asset('assets/images/Screenshot_2019-06-26-09-12-50.png',
-                //       fit: BoxFit.contain);
-                // },
-                // ],
-              },
-            ),
-          ),
-          // Positioned(right: 5,
-          //   child: DotsIndicator(
-          //     dotsCount: pageLength,
-          //     position: numPage, //0,
-          //     decorator: DotsDecorator(
-          //       color: Colors.black87,
-          //       activeColor: Colors.white,
-          //     ),
-          //   ),
-          // )
-        ],
-      ),
-    );
-
-    // Positioned(
-    //   right: 7,
-    //   bottom: 25,
-    //   child: IconButton(
-    //     iconSize: 50,
-    //     color: Colors.white,
-    //     icon: Icon(Icons.arrow_right),
-    //     onPressed: () {},
-    //   ),
-    // )
-
-    //  );
-    // );
-    // ],
-    // );
-  }
+buildIconMarket(numpage, pagelenght) {
+  return ((numpage != pagelenght)
+      ? Icon(Icons.arrow_right, size: 60)
+      : Icon(Icons.arrow_left, size: 60));
 }
