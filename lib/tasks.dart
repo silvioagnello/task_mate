@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:task_mate/helper.dart';
+import 'package:task_mate/market.dart';
 
 int numPage = 0;
 
@@ -330,14 +331,6 @@ class _TasksPageState extends State<TasksPage> {
   }
 // }
 
-// final List<Widget> _pages = <Widget>[
-//   Image.asset('assets/images/logo-de-supermercado-em-png-2.png',
-//       fit: BoxFit.contain),
-//   Image.asset('assets/images/maxresdefault.jpg', fit: BoxFit.contain),
-//   Image.asset('assets/images/Screenshot_2019-06-26-09-12-50.png',
-//       fit: BoxFit.contain),
-// ];
-
   Widget buildBottomNavigationBar(String idCateg) {
     if (idCateg != '0') {
       return null;
@@ -352,19 +345,10 @@ class _TasksPageState extends State<TasksPage> {
               color: Colors.red,
               height: 180,
               width: double.infinity,
-              child: //PageView.builder(
-                  // controller: _pageController,
-                  // itemBuilder: (context, position) {
-
-                  // return _pages[(numPage = (position % pageLength))];
-                  PageView(
+              child: PageView(
                 onPageChanged: (num) {
                   changeDot(num);
                   numPage = num;
-                  // if (num == pageLength) {
-                  //   numPage = -1;
-                  // }
-                  // print(numPage);
                 },
                 children: <Widget>[
                   Image.asset(
@@ -376,20 +360,10 @@ class _TasksPageState extends State<TasksPage> {
                   Image.asset(
                       'assets/images/Screenshot_2019-06-26-09-12-50.png',
                       fit: BoxFit.contain)
-                  // },
                 ],
-                // },
               ),
             ),
-
-            // Positioned(
-            //     right: -30.0,
-            //     child: FlatButton.icon(
-            //         icon: buildIconMarket(numPage, pageLength),
-            //         onPressed: () {
-            //           // print(numPage);
-            //         },
-            //         label: Text("")))
+            Positioned(left: -13.0, child: buildFlatButton(numPage)),
             Positioned(
               right: 5,
               child: DotsIndicator(
@@ -404,28 +378,26 @@ class _TasksPageState extends State<TasksPage> {
           ],
         ),
       );
-
-      // Positioned(
-      //   right: 7,
-      //   bottom: 25,
-      //   child: IconButton(
-      //     iconSize: 50,
-      //     color: Colors.white,
-      //     icon: Icon(Icons.arrow_right),
-      //     onPressed: () {},
-      //   ),
-      // )
-
-      //  );
-      // );
-      // ],
-      // );
     }
   }
-}
 
-buildIconMarket(numpage, pagelenght) {
-  return ((numpage != pagelenght)
-      ? Icon(Icons.arrow_right, size: 60)
-      : Icon(Icons.arrow_left, size: 60));
+  buildFlatButton(num) {
+    if (num == 0) {
+      return RaisedButton(
+        shape: CircleBorder(),
+        elevation: 6,
+        child: Icon(Icons.library_books),
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => MarketPage()));
+        },
+        color: Colors.redAccent,
+        textColor: Colors.black,
+        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        splashColor: Colors.grey,
+      );
+    } else {
+      return Text("");
+    }
+  }
 }
