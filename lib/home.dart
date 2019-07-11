@@ -218,18 +218,3 @@ class Category {
   Category(this.idCateg, this.nmCateg, this.icon, this.color);
 }
 
-// Future<File> _getFile() async {
-//   final directory = await getApplicationDocumentsDirectory();
-//   final file = File("${directory.path}/tasks.json");
-//   return file.existsSync() ? file : null;
-// }
-
-// Future<String> _readData() async {
-//    try {
-//       final file = await _getFile();
-
-//       return file.readAsString();
-//     } catch (e) {
-//       return null;
-//     }
-// }

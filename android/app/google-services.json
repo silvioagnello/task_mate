@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "458481503383",
+    "firebase_url": "https://markets-39c94.firebaseio.com",
+    "project_id": "markets-39c94",
+    "storage_bucket": "markets-39c94.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458481503383:android:a242abedeb887ab9",
+        "android_client_info": {
+          "package_name": "com.inf.scali.task_mate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458481503383-qtbvs9oqen9urthcki50091qd3hb6k91.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxLxQEn2Gx3AZcUW7ZOO0tx_CneLs1_eM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458481503383-qtbvs9oqen9urthcki50091qd3hb6k91.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

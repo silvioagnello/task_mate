@@ -7,6 +7,7 @@ import 'package:task_mate/helper.dart';
 import 'package:task_mate/market.dart';
 
 int numPage = 0;
+String versionSale = '1';
 
 class Categ {
   String idCateg;
@@ -53,11 +54,13 @@ class _TasksPageState extends State<TasksPage> {
               onTap: () {
                 _sendDataBack(context);
               }),
-          title: Text(nmCateg(widget.idCateg),
-              style: TextStyle(
-                  color: Colors.black.withOpacity(0.5),
-                  fontSize: 20.0,
-                  fontFamily: "LibreBaskerville")),
+          title: Text(
+            nmCateg(widget.idCateg),
+            style: TextStyle(
+                color: Colors.black.withOpacity(0.5),
+                fontSize: 20.0,
+                fontFamily: "LibreBaskerville"),
+          ),
           // actions: <Widget>[
           //   Icon(Icons.history)
           // ],
@@ -332,7 +335,7 @@ class _TasksPageState extends State<TasksPage> {
 // }
 
   Widget buildBottomNavigationBar(String idCateg) {
-    if (idCateg != '0') {
+    if (idCateg != '0' || versionSale == '0') {
       return null;
     } else {
       // final _pageController = PageController();
@@ -355,26 +358,26 @@ class _TasksPageState extends State<TasksPage> {
                     'assets/images/logo-de-supermercado-em-png-2.png',
                     fit: BoxFit.contain,
                   ),
-                  Image.asset('assets/images/maxresdefault.jpg',
-                      fit: BoxFit.contain),
-                  Image.asset(
-                      'assets/images/Screenshot_2019-06-26-09-12-50.png',
-                      fit: BoxFit.contain)
+                  // Image.asset('assets/images/maxresdefault.jpg',
+                  //     fit: BoxFit.contain),
+                  // Image.asset(
+                  //     'assets/images/Screenshot_2019-06-26-09-12-50.png',
+                  //     fit: BoxFit.contain)
                 ],
               ),
             ),
             Positioned(left: -13.0, child: buildFlatButton(numPage)),
-            Positioned(
-              right: 5,
-              child: DotsIndicator(
-                dotsCount: pageLength,
-                position: numPage, //0,
-                decorator: DotsDecorator(
-                  color: Colors.black87,
-                  activeColor: Colors.white,
-                ),
-              ),
-            )
+            // Positioned(
+            //   right: 5,
+            //   child: DotsIndicator(
+            //     dotsCount: pageLength,
+            //     position: numPage, //0,
+            //     decorator: DotsDecorator(
+            //       color: Colors.black87,
+            //       activeColor: Colors.white,
+            //     ),
+            //   ),
+            // )
           ],
         ),
       );
@@ -386,7 +389,7 @@ class _TasksPageState extends State<TasksPage> {
       return RaisedButton(
         shape: CircleBorder(),
         elevation: 6,
-        child: Icon(Icons.library_books),
+        child: Icon(Icons.add),
         onPressed: () {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => MarketPage()));

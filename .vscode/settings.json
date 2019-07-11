@@ -1,0 +1,16 @@
+{
+    "workbench.statusBar.feedback.visible": false,
+    "workbench.settings.openDefaultKeybindings": true,
+    "workbench.settings.settingsSearchTocBehavior": "hide",
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+    "emmet.showAbbreviationSuggestions": false,
+    "editor.codeLens": false,
+    "merge-conflict.codeLens.enabled": false,
+    "dart.showTestCodeLens": false,
+    "references.preferredLocation": "view",
+    "editor.defaultFormatter": "Dart-Code.dart-code",
+    "editor.wrappingIndent": "deepIndent",
+    "gulp.autoDetect": "off",
+    "dart.previewFlutterUiGuides": true
+}
