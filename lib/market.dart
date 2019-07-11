@@ -39,7 +39,8 @@ class MarketPage extends StatelessWidget {
             FutureBuilder<QuerySnapshot>(
               future: Firestore.instance
                   .collection("ofertas")
-                  .orderBy("pos")
+                  .where("ativo", isEqualTo: true)
+                  .orderBy("bpos", descending: false)
                   .getDocuments(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData)

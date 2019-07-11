@@ -12,5 +12,6 @@
     "editor.defaultFormatter": "Dart-Code.dart-code",
     "editor.wrappingIndent": "deepIndent",
     "gulp.autoDetect": "off",
-    "dart.previewFlutterUiGuides": true
+    "dart.previewFlutterUiGuides": true,
+    "dart.previewFlutterUiGuidesCustomTracking": true
 }
