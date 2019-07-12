@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
       physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
         Container(
-            color: Colors.blue[100],
+            color: Colors.indigo[300],
             child: ListView.builder(
                 itemCount: _categories.length, itemBuilder: _categoryCards)),
         Container(color: Colors.yellow),

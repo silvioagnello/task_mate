@@ -61,9 +61,7 @@ class _TasksPageState extends State<TasksPage> {
                 fontSize: 20.0,
                 fontFamily: "LibreBaskerville"),
           ),
-          // actions: <Widget>[
-          //   Icon(Icons.history)
-          // ],
+        
         ),
         body: Column(
           children: <Widget>[
@@ -366,7 +364,7 @@ class _TasksPageState extends State<TasksPage> {
                 ],
               ),
             ),
-            Positioned(left: 240.0, child: buildFlatButton(numPage)),
+            Positioned(top: 7, left: 255.0, child: buildFlatButton(numPage)),
             // Positioned(
             //   right: 5,
             //   child: DotsIndicator(
@@ -388,13 +386,14 @@ class _TasksPageState extends State<TasksPage> {
     if (num == 0) {
       return RaisedButton(
         shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)), //CircleBorder(),
-        elevation: 6,
-        child: Text("ofertas", style: TextStyle(fontWeight: FontWeight.normal, fontSize: 30, color: Colors.white),), //Icon(Icons.add),
+        elevation: 4,
+        child: Text("ver ofertas", style: TextStyle(fontWeight: FontWeight.normal, fontSize: 17, color: Colors.black),), //Icon(Icons.add),
         onPressed: () {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => MarketPage()));
         },
-        color: Colors.black38,
+        color: Colors.redAccent,
+        // color: Colors.black38,
         textColor: Colors.black,
         padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
         splashColor: Colors.grey,

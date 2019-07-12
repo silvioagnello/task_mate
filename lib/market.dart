@@ -3,7 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class MarketPage extends StatelessWidget {
+class MarketPage extends StatefulWidget {
+  @override
+  _MarketPageState createState() => _MarketPageState();
+}
+
+class _MarketPageState extends State<MarketPage> {
+  TextEditingController _mailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Widget _buildBodyBack() => Container(
@@ -21,6 +28,17 @@ class MarketPage extends StatelessWidget {
         CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
+              // actions: <Widget>[
+              //   Padding(
+              //     padding: const EdgeInsets.only(right: 20),
+              //     child: IconButton(
+              //       icon: Icon(Icons.mail_outline),
+              //       onPressed: () {
+              //         buildShowDialog(context);
+              //       },
+              //     ),
+              //   ),
+              // ],
               floating: true,
               snap: true,
               backgroundColor: Colors.transparent,
@@ -74,6 +92,37 @@ class MarketPage extends StatelessWidget {
           ],
         )
       ],
+    );
+  }
+
+  buildShowDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Receba novas ofertas por e-mail"),
+          content: TextField(
+            controller: _mailController,
+            autofocus: false,
+            keyboardType: TextInputType.emailAddress,
+            decoration:
+                InputDecoration(labelText: "E-mail", hintText: "Digite e-mail"),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                // print(_mailController);
+                Navigator.pop(context);
+              },
+              child: Text("Enviar"),
+            ),
+            FlatButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text("Cancelar"),
+            )
+          ],
+        );
+      },
     );
   }
 }
