@@ -4,6 +4,9 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MarketPage extends StatefulWidget {
+  final String idCateg;
+  MarketPage(this.idCateg);
+
   @override
   _MarketPageState createState() => _MarketPageState();
 }
@@ -13,6 +16,8 @@ class _MarketPageState extends State<MarketPage> {
 
   @override
   Widget build(BuildContext context) {
+    String tagOfertas = "ofertas-" + widget.idCateg;
+    
     Widget _buildBodyBack() => Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
@@ -28,17 +33,6 @@ class _MarketPageState extends State<MarketPage> {
         CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
-              // actions: <Widget>[
-              //   Padding(
-              //     padding: const EdgeInsets.only(right: 20),
-              //     child: IconButton(
-              //       icon: Icon(Icons.mail_outline),
-              //       onPressed: () {
-              //         buildShowDialog(context);
-              //       },
-              //     ),
-              //   ),
-              // ],
               floating: true,
               snap: true,
               backgroundColor: Colors.transparent,
@@ -56,7 +50,7 @@ class _MarketPageState extends State<MarketPage> {
             ),
             FutureBuilder<QuerySnapshot>(
               future: Firestore.instance
-                  .collection("ofertas")
+                  .collection("$tagOfertas")
                   .where("ativo", isEqualTo: true)
                   .orderBy("bpos", descending: false)
                   .getDocuments(),
@@ -111,7 +105,6 @@ class _MarketPageState extends State<MarketPage> {
           actions: <Widget>[
             FlatButton(
               onPressed: () {
-                // print(_mailController);
                 Navigator.pop(context);
               },
               child: Text("Enviar"),

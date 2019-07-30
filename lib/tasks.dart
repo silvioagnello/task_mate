@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:dots_indicator/dots_indicator.dart';
+// import 'package:dots_indicator/dots_indicator.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:task_mate/helper.dart';
 import 'package:task_mate/market.dart';
@@ -30,7 +31,8 @@ class TasksPage extends StatefulWidget {
 
 class _TasksPageState extends State<TasksPage> {
   final _toDoController = TextEditingController();
-
+  String logo;
+  String ofertas = "";
   List _toDoList = [];
   List _toDoList2 = [];
   bool buttonChanged = false;
@@ -61,12 +63,11 @@ class _TasksPageState extends State<TasksPage> {
                 fontSize: 20.0,
                 fontFamily: "LibreBaskerville"),
           ),
-        
         ),
         body: Column(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 12.0),
+              padding: EdgeInsets.only(left: 4.0, right: 4.0, top: 8.0),
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(8.0)),
@@ -88,10 +89,12 @@ class _TasksPageState extends State<TasksPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: RaisedButton(
                         shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0)),
+                            borderRadius: new BorderRadius.circular(10.0)),
                         elevation: 4.0,
                         color: Colors.lightBlueAccent,
-                        child: Icon(Icons.check),
+                        child: Icon(
+                          Icons.check,
+                        ),
                         onPressed: () {
                           FocusScope.of(context).requestFocus(new FocusNode());
                           return _addToDo();
@@ -207,6 +210,20 @@ class _TasksPageState extends State<TasksPage> {
 
           _refresh2();
         }
+
+        helper.getlogo(widget.idCateg).then((data) {
+          setState(() {
+            logo = data;
+          });
+        });
+
+        // 
+        // ofertas = Firestore.instance.collection(tagOfertas).getDocuments().toString();
+        helper.getofertas(widget.idCateg).then((data) {
+          // setState(() {
+            ofertas = data;
+          // });
+        });
       });
     });
   }
@@ -262,7 +279,9 @@ class _TasksPageState extends State<TasksPage> {
     if (buttonChanged) {
       return showDialog(
             context: context,
-            child: AlertDialog(
+            builder: (BuildContext context) => new
+                // child:
+                AlertDialog(
               title: Text('Para voltar...'),
               content: Text('Clique no botão na barra superior'),
               actions: <Widget>[
@@ -333,64 +352,58 @@ class _TasksPageState extends State<TasksPage> {
 // }
 
   Widget buildBottomNavigationBar(String idCateg) {
-    if (idCateg != '0' || versionSale == '0') {
+    if (logo == null || versionSale == '0') {
+      // if (idCateg != '0' || versionSale == '0') {
       return null;
     } else {
       // final _pageController = PageController();
-      final pageLength = 3;
+      // final pageLength = 3;
 
       return BottomAppBar(
         child: Stack(
           children: <Widget>[
             Container(
-              color: Colors.red,
-              height: 180,
+              // color: Colors.red,
+              height: 130,
               width: double.infinity,
-              child: PageView(
-                onPageChanged: (num) {
-                  changeDot(num);
-                  numPage = num;
-                },
-                children: <Widget>[
-                  Image.asset(
-                    'assets/images/logo-de-supermercado-em-png-2.png',
-                    fit: BoxFit.contain,
-                  ),
-                  // Image.asset('assets/images/maxresdefault.jpg',
-                  //     fit: BoxFit.contain),
-                  // Image.asset(
-                  //     'assets/images/Screenshot_2019-06-26-09-12-50.png',
-                  //     fit: BoxFit.contain)
-                ],
+              child: Image.network(
+                logo,
+                // "https://firebasestorage.googleapis.com/v0/b/markets-39c94.appspot.com/o/logo-de-supermercado-em-png-2.png?alt=media&token=fd2f58c7-e4b4-411e-af88-3fd39c44917a",
+                fit: BoxFit.fill,
               ),
             ),
-            Positioned(top: 7, left: 255.0, child: buildFlatButton(numPage)),
-            // Positioned(
-            //   right: 5,
-            //   child: DotsIndicator(
-            //     dotsCount: pageLength,
-            //     position: numPage, //0,
-            //     decorator: DotsDecorator(
-            //       color: Colors.black87,
-            //       activeColor: Colors.white,
-            //     ),
-            //   ),
-            // )
+            // ],
+            // ),
+            // ),
+            Positioned(top: 5, right: 8.0, child: buildFlatButton()),
+            // Positioned(top: 5, right: 8.0, child: buildFlatButton(numPage)),
           ],
         ),
       );
     }
   }
 
-  buildFlatButton(num) {
-    if (num == 0) {
+  buildFlatButton() {
+    if (ofertas == "") {
+      numPage = 1;
+    } else {
+      numPage = 0;
+    }
+
+    if (numPage == 0) {
       return RaisedButton(
-        shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(10.0)), //CircleBorder(),
+        shape: RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(10.0)), //CircleBorder(),
         elevation: 4,
-        child: Text("ver ofertas", style: TextStyle(fontWeight: FontWeight.normal, fontSize: 17, color: Colors.black),), //Icon(Icons.add),
+        child: Text(
+          (numPage == 0) ? "ver ofertas" : "",
+          style: TextStyle(
+              fontWeight: FontWeight.normal, fontSize: 17, color: Colors.black),
+        ), //Icon(Icons.add),
         onPressed: () {
+          if(numPage == 0) { 
           Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => MarketPage()));
+              .push(MaterialPageRoute(builder: (context) => MarketPage(widget.idCateg)));}
         },
         color: Colors.redAccent,
         // color: Colors.black38,
@@ -399,7 +412,7 @@ class _TasksPageState extends State<TasksPage> {
         splashColor: Colors.grey,
       );
     } else {
-      return Text("");
+      return Container(); //null;
     }
   }
 }
