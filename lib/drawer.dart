@@ -65,6 +65,14 @@ class CustomDrawer extends StatelessWidget {
                   ),
                 ),
               ),
+              Container(
+                child: Text(
+                  "Este é um Utilitário para te ajudar a lembrar quando precisar guardar os diversos itens" +
+                      " de uma lista. \n\nEstes Itens, são armazenados na memória do seu dispositivo.",
+                  style:
+                      TextStyle(fontSize: 18.0, fontFamily: "LibreBaskerville"),
+                ),
+              ),
               // Divider(),
               // DrawerTile(Icons.help, "Ajuda", pageController, 1),
               // DrawerTile(Icons.perm_media, "Sobre", pageController, 2),
