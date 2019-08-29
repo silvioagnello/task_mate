@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
 import 'package:task_mate/drawer.dart';
@@ -33,9 +34,23 @@ class _HomePageState extends State<HomePage> {
 
   Helper helper = new Helper();
 
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
   @override
   void initState() {
     super.initState();
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('on message $message');
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('on resume $message');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('on launch $message');
+      },
+    );
 
     helper.readData().then((data) {
       if (data != null) {
@@ -217,4 +232,3 @@ class Category {
 
   Category(this.idCateg, this.nmCateg, this.icon, this.color);
 }
-
