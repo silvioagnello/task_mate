@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:task_mate/helper.dart';
 import 'package:task_mate/market.dart';
 
-int numPage = 0;
+int numPage;
 String versionSale = '1';
 
 class Categ {
@@ -41,6 +41,55 @@ class _TasksPageState extends State<TasksPage> {
   FocusNode _focusNode;
 
   Helper helper = new Helper();
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _focusNode = FocusNode();
+    sleep(const Duration(milliseconds: 10));
+
+    helper.readData().then((data) {
+      setState(() {
+        if (data != null) {
+          _toDoList = json.decode(data);
+          _toDoList2 = json.decode(data);
+
+          _toDoList2.removeWhere((c) => c["idCateg"] == widget.idCateg);
+          _toDoList.removeWhere((c) => c["idCateg"] != widget.idCateg);
+
+          buttonChanged = false;
+
+          _refresh2();
+        }
+
+        helper.getlogo(widget.idCateg).then((data) {
+          setState(() {
+            if (data != null) {
+              logo = data;
+              // ofertas = "logo";
+            } else {
+              ofertas = "";
+            }
+          });
+        });
+
+        helper.getofertas(widget.idCateg).then((data) {
+          if (data != null) {
+            setState(() {
+              ofertas = data;
+            });
+          }
+        });
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -177,55 +226,10 @@ class _TasksPageState extends State<TasksPage> {
             ),
             duration: Duration(seconds: 7),
           );
-          // Scaffold.of(context).removeCurrentSnackBar();
           Scaffold.of(context).showSnackBar(snack);
         });
       },
     );
-  }
-
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    _focusNode = FocusNode();
-    sleep(const Duration(milliseconds: 10));
-
-    helper.readData().then((data) {
-      setState(() {
-        if (data != null) {
-          _toDoList = json.decode(data);
-          _toDoList2 = json.decode(data);
-
-          _toDoList2.removeWhere((c) => c["idCateg"] == widget.idCateg);
-          _toDoList.removeWhere((c) => c["idCateg"] != widget.idCateg);
-
-          buttonChanged = false;
-
-          _refresh2();
-        }
-
-        helper.getlogo(widget.idCateg).then((data) {
-          setState(() {
-            logo = data;
-          });
-        });
-
-        // 
-        // ofertas = Firestore.instance.collection(tagOfertas).getDocuments().toString();
-        helper.getofertas(widget.idCateg).then((data) {
-          // setState(() {
-            ofertas = data;
-          // });
-        });
-      });
-    });
   }
 
   String nmCateg(idCateg) {
@@ -279,9 +283,7 @@ class _TasksPageState extends State<TasksPage> {
     if (buttonChanged) {
       return showDialog(
             context: context,
-            builder: (BuildContext context) => new
-                // child:
-                AlertDialog(
+            builder: (BuildContext context) => new AlertDialog(
               title: Text('Para voltar...'),
               content: Text('Clique no botão na barra superior'),
               actions: <Widget>[
@@ -316,7 +318,6 @@ class _TasksPageState extends State<TasksPage> {
         else
           return 0;
       });
-      // _saveData();
     });
     return null;
   }
@@ -332,8 +333,6 @@ class _TasksPageState extends State<TasksPage> {
       else
         return 0;
     });
-    // _saveData();
-    // });
     return null;
   }
 
@@ -352,31 +351,22 @@ class _TasksPageState extends State<TasksPage> {
 // }
 
   Widget buildBottomNavigationBar(String idCateg) {
-    if (logo == null || versionSale == '0') {
-      // if (idCateg != '0' || versionSale == '0') {
+    if (logo == null) // || versionSale == '0')
+    {
       return null;
     } else {
-      // final _pageController = PageController();
-      // final pageLength = 3;
-
       return BottomAppBar(
         child: Stack(
           children: <Widget>[
             Container(
-              // color: Colors.red,
               height: 130,
               width: double.infinity,
               child: Image.network(
-                logo,
-                // "https://firebasestorage.googleapis.com/v0/b/markets-39c94.appspot.com/o/logo-de-supermercado-em-png-2.png?alt=media&token=fd2f58c7-e4b4-411e-af88-3fd39c44917a",
+                "$logo",
                 fit: BoxFit.fill,
               ),
             ),
-            // ],
-            // ),
-            // ),
             Positioned(top: 5, right: 8.0, child: buildFlatButton()),
-            // Positioned(top: 5, right: 8.0, child: buildFlatButton(numPage)),
           ],
         ),
       );
@@ -384,26 +374,22 @@ class _TasksPageState extends State<TasksPage> {
   }
 
   buildFlatButton() {
-    if (ofertas == "") {
-      numPage = 1;
-    } else {
-      numPage = 0;
-    }
-
-    if (numPage == 0) {
+    if (ofertas != "") {
       return RaisedButton(
+        //animationDuration: Duration(milliseconds: 500),
         shape: RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(10.0)), //CircleBorder(),
         elevation: 4,
         child: Text(
-          (numPage == 0) ? "ver ofertas" : "",
+          "ver ofertas",
           style: TextStyle(
               fontWeight: FontWeight.normal, fontSize: 17, color: Colors.black),
         ), //Icon(Icons.add),
         onPressed: () {
-          if(numPage == 0) { 
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => MarketPage(widget.idCateg)));}
+          // if (numPage == 0) {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => MarketPage(widget.idCateg)));
+          // }
         },
         color: Colors.redAccent,
         // color: Colors.black38,
