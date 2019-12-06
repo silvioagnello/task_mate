@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
     Category("1", "FARMÁCIA", Icons.local_pharmacy, Colors.pink[100]),
     Category("2", "CONSTRUÇÃO", Icons.build, Colors.green[100]),
     Category("3", "TAREFAS", Icons.style, Colors.blueAccent[100]),
-    Category("4", "AUTOMÓVEL", Icons.directions_car, Colors.blue[400]),
+    Category("4", "ELETRÔNICOS", Icons.headset_mic, Colors.blue[400]),
     Category("5", "ROUPAS", Icons.card_giftcard, Colors.red[200]),
     Category("6", "OUTROS", Icons.dashboard, Colors.brown[200]),
   ];

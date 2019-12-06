@@ -248,7 +248,7 @@ class _TasksPageState extends State<TasksPage> {
         nmCateg = 'TAREFAS';
         break;
       case "4":
-        nmCateg = 'AUTOMÓVEL';
+        nmCateg = 'ELETRÔNICOS';
         break;
       case "5":
         nmCateg = 'ROUPAS';
